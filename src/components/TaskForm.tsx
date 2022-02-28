@@ -1,5 +1,5 @@
 import { AiOutlinePlus } from 'react-icons/ai';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useRef } from 'react';
 import { HandleInputChange, Task } from '../interfaces/interfaces';
 
 interface Props {
@@ -13,7 +13,7 @@ const inititalState = {
 
 export const TaskForm = ({ addNewTask }: Props) => {
   const [task, setTask] = useState<Task>(inititalState);
-
+  const inputTile = useRef<HTMLInputElement>(null);
   const { title, description } = task;
 
   const handleInputChange = ({
@@ -29,6 +29,7 @@ export const TaskForm = ({ addNewTask }: Props) => {
     e.preventDefault();
     addNewTask(task);
     setTask(inititalState);
+    inputTile.current?.focus();
   };
 
   return (
@@ -42,6 +43,7 @@ export const TaskForm = ({ addNewTask }: Props) => {
           placeholder='Write a title'
           className='form-control mb-3 rounded-0 shadow-none border-0'
           value={title}
+          ref={inputTile}
           onChange={handleInputChange}
         />
         <textarea
